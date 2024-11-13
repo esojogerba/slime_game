@@ -1,5 +1,7 @@
-function love.load() end
+-- Jose smells
 
+function love.load() end
+    
 function love.update(dt) end
 
 function love.draw() end
