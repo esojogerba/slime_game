@@ -2,6 +2,7 @@ require("player")
 require("map")
 require("enemy")
 require("sounds")
+require("stairs")
 
 function love.load()
 	-- Print to console
@@ -18,6 +19,7 @@ function love.load()
 	world:addCollisionClass("Obstacle", { collidesWith = { "Enemy", "Player" } })
 	world:addCollisionClass("Player", { collidesWith = { "Obstacle", "Enemy" } })
 	world:addCollisionClass("Enemy", { collidesWith = { "Obstacle", "Player" } })
+	world:addCollisionClass("Stairs", { collidesWith = { "Player"}})
 
 	-- Camera library
 	camera = require("libraries/camera")
@@ -39,6 +41,9 @@ function love.load()
 	-- Set the scale to the smaller of the two to maintain aspect ratio
 	cam.scale = math.min(scaleX, scaleY)
 
+	-- Stairs
+	Stairs:load()
+
 	-- Player
 	Player:load()
 
@@ -59,6 +64,9 @@ function love.update(dt)
 	-- Enemy
 	Enemy:update(dt, Player)
 
+	-- Stairs
+	Stairs:update(dt)
+
 	-- Update world
 	world:update(dt)
 
@@ -72,6 +80,9 @@ function love.draw()
 
 	-- Map
 	Map:draw()
+
+	-- Stairs
+	Stairs:draw()
 
 	-- Player
 	Player:draw()
