@@ -101,11 +101,21 @@ function Player:enemyCollision()
 	print("Player collided with Enemy!")
 	print("Player's Health: ", self.health)
 
-	if self.health == 0 then
-		-- Game over screen, restart
+	-- Display game over screen if player has died
+	if self.health <= 0 and not Game.isGameOver then
+		Game.isGameOver = true
+		Game.fadeTimer = 1 -- Reset fade timer
+		Game.fadeAlpha = 1 -- Reset fade alpha
 	end
 end
 
 function Player:draw()
+	if Game.isGameOver then
+		-- Fade sprite by applying the alpha value
+		love.graphics.setColor(0, 0, 0, Game.fadeAlpha) -- Black fade
+	else
+		love.graphics.setColor(1, 1, 1, 1) -- Normal color
+	end
+
 	self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
 end
