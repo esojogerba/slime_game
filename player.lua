@@ -99,7 +99,11 @@ end
 function Player:enemyCollision()
 	self.health = Player.health - 1
 	print("Player collided with Enemy!")
-	print("Player's Health: " + self.health)
+	print("Player's Health: ", self.health)
+
+	if self.health == 0 then
+		-- Game over screen, restart
+	end
 end
 
 function Player:draw()
