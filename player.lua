@@ -101,9 +101,9 @@ function Player:enemyCollision()
 	print("Player collided with Enemy!")
 	print("Player's Health: ", self.health)
 
-	-- Display game over screen if player has died
-	if self.health <= 0 and not Game.isGameOver then
-		Game.isGameOver = true
+	-- Fade to game over screen if player has died
+	if self.health <= 0 and Game.state == "running" then
+		Game.state = "fading"
 		Game.fadeTimer = 1 -- Reset fade timer
 		Game.fadeAlpha = 1 -- Reset fade alpha
 	end
