@@ -19,6 +19,9 @@ function Player:load()
 	-- Speed
 	self.speed = 100
 
+	-- Health
+	self.health = 5
+
 	-- Sprite and grid
 	self.spriteSheet = love.graphics.newImage("sprites/mainSlime.png")
 	self.grid = anim8.newGrid(12, 10, self.spriteSheet:getWidth(), self.spriteSheet:getHeight())
@@ -44,6 +47,11 @@ function Player:update(dt)
 
 	-- Update animation
 	self.anim:update(dt)
+
+	-- Enemy collisions
+	if self.collider:enter("Enemy") then
+		Player:enemyCollision()
+	end
 end
 
 -- Player movement with arrow keys
@@ -85,6 +93,13 @@ function Player:move(dt)
 	self.collider:setLinearVelocity(vx, vy)
 
 	self.anim:update(dt)
+end
+
+-- Take damage from enemies when collision occurs
+function Player:enemyCollision()
+	self.health = Player.health - 1
+	print("Player collided with Enemy!")
+	print("Player's Health: " + self.health)
 end
 
 function Player:draw()

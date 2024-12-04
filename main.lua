@@ -4,6 +4,9 @@ require("enemy")
 require("sounds")
 
 function love.load()
+	-- Print to console
+	io.stdout:setvbuf("no")
+
 	-- Set the title
 	love.window.setTitle("Slime Game")
 
@@ -77,7 +80,7 @@ function love.draw()
 	Enemy:draw()
 
 	-- Draw world colliders
-	-- world:draw()
+	world:draw()
 
 	-- Detach camera
 	cam:detach()
