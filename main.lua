@@ -19,7 +19,7 @@ function love.load()
 	world:addCollisionClass("Obstacle", { collidesWith = { "Enemy", "Player" } })
 	world:addCollisionClass("Player", { collidesWith = { "Obstacle", "Enemy" } })
 	world:addCollisionClass("Enemy", { collidesWith = { "Obstacle", "Player" } })
-	world:addCollisionClass("Stairs", { collidesWith = { "Player"}})
+	world:addCollisionClass("Stairs", { collidesWith = { "Player" } })
 
 	-- Camera library
 	camera = require("libraries/camera")
@@ -41,6 +41,13 @@ function love.load()
 	-- Set the scale to the smaller of the two to maintain aspect ratio
 	cam.scale = math.min(scaleX, scaleY)
 
+	-- Game
+	Game = {
+		isGameOver = false,
+		fadeTimer = 1, -- Time in seconds for fading
+		fadeAlpha = 1, -- Initial alpha for fading
+	}
+
 	-- Stairs
 	Stairs:load()
 
@@ -55,6 +62,18 @@ function love.load()
 end
 
 function love.update(dt)
+	-- Game over
+	if Game.isGameOver then
+		-- Only handle game over logic
+		Game.fadeTimer = Game.fadeTimer - dt
+		if Game.fadeTimer > 0 then
+			Game.fadeAlpha = Game.fadeTimer -- Adjust alpha over time
+		else
+			Game.fadeAlpha = 0
+		end
+		return
+	end
+
 	-- Map
 	Map:update(dt)
 
@@ -92,6 +111,15 @@ function love.draw()
 
 	-- Draw world colliders
 	world:draw()
+
+	-- Game over
+	if Game.isGameOver then
+		if Game.fadeAlpha <= 0 then
+			-- Draw Game Over screen
+			love.graphics.setColor(1, 1, 1, 1) -- Reset color
+			love.graphics.printf("GAME OVER", 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), "center")
+		end
+	end
 
 	-- Detach camera
 	cam:detach()
