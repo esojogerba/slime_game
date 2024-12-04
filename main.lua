@@ -43,7 +43,7 @@ function love.load()
 
 	-- Game
 	Game = {
-		isGameOver = false,
+		state = "running", -- Possible states: "running", "fading", "game_over"
 		fadeTimer = 1, -- Time in seconds for fading
 		fadeAlpha = 1, -- Initial alpha for fading
 	}
@@ -63,64 +63,115 @@ end
 
 function love.update(dt)
 	-- Game over
-	if Game.isGameOver then
-		-- Only handle game over logic
+	if Game.state == "fading" then
 		Game.fadeTimer = Game.fadeTimer - dt
+
 		if Game.fadeTimer > 0 then
 			Game.fadeAlpha = Game.fadeTimer -- Adjust alpha over time
 		else
 			Game.fadeAlpha = 0
+			Game.state = "game_over" -- Transition to "game_over"
 		end
+
 		return
 	end
 
-	-- Map
-	Map:update(dt)
+	-- Game is running
+	if Game.state == "running" then
+		-- Map
+		Map:update(dt)
 
-	-- Player
-	Player:update(dt)
+		-- Player
+		Player:update(dt)
 
-	-- Enemy
-	Enemy:update(dt, Player)
+		-- Enemy
+		Enemy:update(dt, Player)
 
-	-- Stairs
-	Stairs:update(dt)
+		-- Stairs
+		Stairs:update(dt)
 
-	-- Update world
-	world:update(dt)
+		-- Update world
+		world:update(dt)
 
-	-- Camera is set to the center of the map
-	cam:lookAt(Map.x, Map.y)
+		-- Camera is set to the center of the map
+		cam:lookAt(Map.x, Map.y)
+	end
 end
 
 function love.draw()
-	-- Draw from the camera's perspective
-	cam:attach()
+	if Game.state == "running" or Game.state == "fading" then
+		-- Draw from the camera's perspective
+		cam:attach()
 
-	-- Map
-	Map:draw()
+		-- Map
+		Map:draw()
 
-	-- Stairs
-	Stairs:draw()
+		-- Stairs
+		Stairs:draw()
 
-	-- Player
-	Player:draw()
+		-- Player
+		Player:draw()
 
-	-- Enemy
-	Enemy:draw()
+		-- Enemy
+		Enemy:draw()
 
-	-- Draw world colliders
-	world:draw()
+		-- Draw world colliders
+		-- world:draw()
 
-	-- Game over
-	if Game.isGameOver then
-		if Game.fadeAlpha <= 0 then
-			-- Draw Game Over screen
-			love.graphics.setColor(1, 1, 1, 1) -- Reset color
-			love.graphics.printf("GAME OVER", 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), "center")
-		end
+		-- Detach camera
+		cam:detach()
 	end
 
-	-- Detach camera
-	cam:detach()
+	if Game.state == "fading" then
+		-- Fade effect
+		love.graphics.setColor(0, 0, 0, 1 - Game.fadeAlpha) -- Black fade-in
+		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+		love.graphics.setColor(1, 1, 1, 1) -- Reset color
+	end
+
+	if Game.state == "game_over" then
+		-- Black background
+		love.graphics.setColor(0, 0, 0, 1)
+		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+
+		-- "You Died" message
+		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.setFont(love.graphics.newFont(32))
+		love.graphics.printf("You Died", 0, love.graphics.getHeight() / 3, love.graphics.getWidth(), "center")
+
+		-- Draw "Continue" button
+		local buttonWidth, buttonHeight = 200, 50
+		local buttonX = (love.graphics.getWidth() - buttonWidth) / 2
+		local buttonY = love.graphics.getHeight() / 2
+		love.graphics.rectangle("fill", buttonX, buttonY, buttonWidth, buttonHeight)
+		love.graphics.setColor(0, 0, 0, 1)
+		love.graphics.printf("Continue", buttonX, buttonY + 10, buttonWidth, "center")
+	end
+end
+
+function love.mousepressed(x, y, button)
+	if button == 1 and Game.state == "game_over" then
+		-- Button dimensions
+		local buttonWidth, buttonHeight = 200, 50
+		local buttonX = (love.graphics.getWidth() - buttonWidth) / 2
+		local buttonY = love.graphics.getHeight() / 2
+
+		-- Check if the mouse is inside the button bounds
+		if x > buttonX and x < buttonX + buttonWidth and y > buttonY and y < buttonY + buttonHeight then
+			resetGame()
+		end
+	end
+end
+
+function resetGame()
+	-- Reset game variables
+	Game.state = "running"
+	Game.fadeTimer = 1
+	Game.fadeAlpha = 1
+
+	-- Reset player
+	Player.health = 5
+	Player.collider:setPosition(50, 50)
+
+	-- Reset enemies, map, etc. as needed
 end
