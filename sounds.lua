@@ -1,12 +1,21 @@
-sounds = {}
+Sounds = {}
 
-function sounds:load()
-	self.titleSong = love.audio.newSource("sounds/title.wav", "stream")
-	self.titleSong:setLooping(true)
+function Sounds:load(soundFile)
+	-- Stop current song
+	self:unload()
 
-	self.titleSong:play()
+	self.currentSong = love.audio.newSource(soundFile, "stream")
+	self.currentSong:setLooping(true)
+
+	self.currentSong:play()
 end
 
-function sounds:update(dt) end
+function Sounds:unload()
+	if self.currentSong then
+		self.currentSong:stop()
+	end
+end
 
-function sounds:draw() end
+function Sounds:update(dt) end
+
+function Sounds:draw() end
