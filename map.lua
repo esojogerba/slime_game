@@ -1,11 +1,16 @@
 Map = {}
 
-function Map:load()
-	-- STI library
-	sti = require("libraries/sti")
+-- STI library
+sti = require("libraries/sti")
+
+function Map:load(mapFile)
+
+	-- Clear existing map data
+	self:unload()
 
 	-- Map
-	self.gameMap = sti("maps/square_map.lua")
+	self.gameMap = sti(mapFile)
+	
 	self.x = (self.gameMap.width * self.gameMap.tilewidth) / 2
 	self.y = (self.gameMap.height * self.gameMap.tileheight) / 2
 
@@ -21,10 +26,40 @@ function Map:load()
 	end
 end
 
-function Map:update(dt) end
+function Map:unload()
+    -- Remove collision objects
+    if walls then
+        for _, wall in pairs(walls) do
+            if wall and wall.body then
+                wall:destroy()
+            end
+        end
+        walls = {}
+    end
+    -- Clear map data
+    self.gameMap = nil
+end
+
+function Map:update(dt)
+    if self.gameMap then
+        self.gameMap:update(dt)
+    end
+end
+
+function Map:update(dt)
+	if self.gameMap then
+		self.gameMap:update(dt)
+	end
+end
 
 function Map:draw()
-	-- Draw map in layers
-	self.gameMap:drawLayer(self.gameMap.layers["Floor"])
-	self.gameMap:drawLayer(self.gameMap.layers["Obstacles"])
+    if self.gameMap then
+        -- Draw map in layers
+        if self.gameMap.layers["Floor"] then
+            self.gameMap:drawLayer(self.gameMap.layers["Floor"])
+        end
+        if self.gameMap.layers["Obstacles"] then
+            self.gameMap:drawLayer(self.gameMap.layers["Obstacles"])
+        end
+    end
 end
