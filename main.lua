@@ -24,8 +24,8 @@ function love.load()
 	-- Camera library
 	camera = require("libraries/camera")
 
-	-- Map
-	Map:load()
+	-- Map (load default map)
+	Map:load("maps/square_map.lua")
 
 	-- Camera
 	cam = camera()
