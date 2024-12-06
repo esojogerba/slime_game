@@ -164,7 +164,7 @@ function love.mousepressed(x, y, button)
 end
 
 function resetGame()
-	-- Reset game variables
+	-- Reset game state variables
 	Game.state = "running"
 	Game.fadeTimer = 1
 	Game.fadeAlpha = 1
@@ -173,5 +173,10 @@ function resetGame()
 	Player.health = 5
 	Player.collider:setPosition(50, 50)
 
-	-- Reset enemies, map, etc. as needed
+	-- Reset enemies
+	Enemy.collider:setPosition(250, 250)
+
+	-- Reset map
+
+	-- Reset music
 end
