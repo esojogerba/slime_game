@@ -58,7 +58,7 @@ function love.load()
 	Enemy:load()
 
 	-- Sounds
-	sounds:load()
+	Sounds:load("sounds/title.wav")
 end
 
 function love.update(dt)
@@ -176,7 +176,14 @@ function resetGame()
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
 
+	-- Reset stairs
+	Stairs.x = 100
+	Stairs.y = 100
+	Stairs.collider:setPosition(Stairs.x, Stairs.y)
+
 	-- Reset map
+	Map:load("maps/square_map.lua")
 
 	-- Reset music
+	Sounds:load("sounds/title.wav")
 end
