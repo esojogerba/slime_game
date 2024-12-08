@@ -85,7 +85,7 @@ function love.update(dt)
 		Map:update(dt)
 
 		-- Player
-		Player:update(dt)
+		Player:update(dt, Enemy)
 
 		-- Enemy
 		Enemy:update(dt, Player)
@@ -178,6 +178,8 @@ function resetGame()
 	-- Reset player
 	Player.health = 5
 	Player.collider:setPosition(50, 50)
+	Player.isFlashing = false
+	Player.anim = Player.animations.right
 
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
