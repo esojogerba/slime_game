@@ -46,6 +46,7 @@ function love.load()
 		state = "running", -- Possible states: "running", "fading", "game_over"
 		fadeTimer = 1, -- Time in seconds for fading
 		fadeAlpha = 1, -- Initial alpha for fading
+		sound = love.audio.newSource("sounds/game_over.wav", "static"),
 	}
 
 	-- Stairs
@@ -71,6 +72,8 @@ function love.update(dt)
 		else
 			Game.fadeAlpha = 0
 			Game.state = "game_over" -- Transition to "game_over"
+			Sounds.currentSong:stop()
+			Game.sound:play()
 		end
 
 		return
@@ -164,6 +167,9 @@ function love.mousepressed(x, y, button)
 end
 
 function resetGame()
+	-- Stop game over sound
+	Game.sound:stop()
+
 	-- Reset game state variables
 	Game.state = "running"
 	Game.fadeTimer = 1
