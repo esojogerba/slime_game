@@ -22,6 +22,15 @@ function Player:load()
 	-- Health
 	self.health = 5
 
+	-- Player damage flash
+	self.flashTimer = 0 -- Timer for red flash effect
+	self.isFlashing = false -- Whether the player is flashing red
+
+	-- Player damage recoil
+	self.recoilDuration = 0.2 -- Duration of recoil effect
+	self.recoilTimer = 0 -- Timer for recoil
+	self.recoilDirection = { x = 0, y = 0 } -- Direction to recoil
+
 	-- Sprite and grid
 	self.spriteSheet = love.graphics.newImage("sprites/mainSlime.png")
 	self.grid = anim8.newGrid(12, 10, self.spriteSheet:getWidth(), self.spriteSheet:getHeight())
@@ -48,9 +57,26 @@ function Player:load()
 	-- Use Stairs
 end
 
-function Player:update(dt)
-	-- Player movement with arrow keys
-	self:move(dt)
+function Player:update(dt, Enemy)
+	-- Recoil from damage or move normally
+	if self.recoilTimer > 0 then
+		-- Apply recoil movement
+		local vx = self.recoilDirection.x * self.speed * 1
+		local vy = self.recoilDirection.y * self.speed * 1
+		self.collider:setLinearVelocity(vx, vy)
+		self.recoilTimer = self.recoilTimer - dt
+	else
+		-- Player movement with arrow keys
+		self:move(dt)
+	end
+
+	-- Update flashing effect
+	if self.isFlashing then
+		self.flashTimer = self.flashTimer - dt
+		if self.flashTimer <= 0 then
+			self.isFlashing = false
+		end
+	end
 
 	-- Match player position with collider position
 	self.x = self.collider:getX()
@@ -61,7 +87,7 @@ function Player:update(dt)
 
 	-- Enemy collisions
 	if self.collider:enter("Enemy") then
-		Player:enemyCollision(1)
+		Player:enemyCollision(1, Enemy)
 	end
 end
 
@@ -107,17 +133,30 @@ function Player:move(dt)
 end
 
 -- Take damage from enemies when collision occurs
-function Player:enemyCollision(damage)
+function Player:enemyCollision(damage, Enemy)
+	-- Decrease player's health
+	self.health = Player.health - damage
+	print("Player collided with Enemy!")
+	print("Player's Health: ", self.health)
+
 	-- TODO play sound effect
 	self.damage_sound:play()
 
 	-- TODO make player flash red
+	self.isFlashing = true
+	self.flashTimer = 0.3
 
 	-- TODO make player recoil
+	local enemy_x, enemy_y = Enemy.collider:getPosition()
+	local dx = self.x - enemy_x
+	local dy = self.y - enemy_y
+	local magnitude = math.sqrt(dx * dx + dy * dy)
 
-	self.health = Player.health - damage
-	print("Player collided with Enemy!")
-	print("Player's Health: ", self.health)
+	if self.health > 0 then
+		self.recoilDirection.x = dx / magnitude
+		self.recoilDirection.y = dy / magnitude
+		self.recoilTimer = self.recoilDuration
+	end
 
 	-- Fade to game over screen if player has died
 	if self.health <= 0 and Game.state == "running" then
@@ -128,12 +167,17 @@ function Player:enemyCollision(damage)
 end
 
 function Player:draw()
-	if Game.isGameOver then
-		-- Fade sprite by applying the alpha value
-		love.graphics.setColor(0, 0, 0, Game.fadeAlpha) -- Black fade
+	-- Set player color based on flashing state
+	if self.isFlashing then
+		-- Flash red
+		love.graphics.setColor(1, 0, 0, 0.3)
 	else
-		love.graphics.setColor(1, 1, 1, 1) -- Normal color
+		-- Normal color
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 
 	self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
+
+	-- Normal color
+	love.graphics.setColor(1, 1, 1, 1)
 end
