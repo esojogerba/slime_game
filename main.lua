@@ -46,6 +46,7 @@ function love.load()
 		state = "running", -- Possible states: "running", "fading", "game_over"
 		fadeTimer = 1, -- Time in seconds for fading
 		fadeAlpha = 1, -- Initial alpha for fading
+		sound = love.audio.newSource("sounds/game_over.wav", "static"),
 	}
 
 	-- Stairs
@@ -71,6 +72,8 @@ function love.update(dt)
 		else
 			Game.fadeAlpha = 0
 			Game.state = "game_over" -- Transition to "game_over"
+			Sounds.currentSong:stop()
+			Game.sound:play()
 		end
 
 		return
@@ -82,7 +85,7 @@ function love.update(dt)
 		Map:update(dt)
 
 		-- Player
-		Player:update(dt)
+		Player:update(dt, Enemy)
 
 		-- Enemy
 		Enemy:update(dt, Player)
@@ -164,6 +167,9 @@ function love.mousepressed(x, y, button)
 end
 
 function resetGame()
+	-- Stop game over sound
+	Game.sound:stop()
+
 	-- Reset game state variables
 	Game.state = "running"
 	Game.fadeTimer = 1
@@ -172,6 +178,8 @@ function resetGame()
 	-- Reset player
 	Player.health = 5
 	Player.collider:setPosition(50, 50)
+	Player.isFlashing = false
+	Player.anim = Player.animations.right
 
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
