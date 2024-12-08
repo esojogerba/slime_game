@@ -35,6 +35,17 @@ function Player:load()
 
 	-- Player's current animation
 	self.anim = self.animations.right
+
+	-- TODO Sounds
+
+	-- Damage
+	self.damage_sound = love.audio.newSource("sounds/player_damage.wav", "static")
+
+	-- Attack
+
+	-- Item
+
+	-- Use Stairs
 end
 
 function Player:update(dt)
@@ -50,7 +61,7 @@ function Player:update(dt)
 
 	-- Enemy collisions
 	if self.collider:enter("Enemy") then
-		Player:enemyCollision()
+		Player:enemyCollision(1)
 	end
 end
 
@@ -96,8 +107,15 @@ function Player:move(dt)
 end
 
 -- Take damage from enemies when collision occurs
-function Player:enemyCollision()
-	self.health = Player.health - 1
+function Player:enemyCollision(damage)
+	-- TODO play sound effect
+	self.damage_sound:play()
+
+	-- TODO make player flash red
+
+	-- TODO make player recoil
+
+	self.health = Player.health - damage
 	print("Player collided with Enemy!")
 	print("Player's Health: ", self.health)
 
