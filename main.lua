@@ -188,6 +188,8 @@ function resetGame()
 	Stairs.x = 100
 	Stairs.y = 100
 	Stairs.collider:setPosition(Stairs.x, Stairs.y)
+	Stairs.locked = true
+	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
 
 	-- Reset map
 	Map:load("maps/square_map.lua")
