@@ -20,11 +20,13 @@ function Player:load()
 	self.speed = 100
 
 	-- Health
-	self.health = 5
+	self.max_hearts = 5
+	self.health = self.max_hearts
+	self.invincible = false
 
 	-- Player damage flash
-	self.flashTimer = 0 -- Timer for red flash effect
-	self.isFlashing = false -- Whether the player is flashing red
+	self.flashTimer = 0 -- Timer for opacity flash effect
+	self.isFlashing = false -- Whether the player is flashing
 
 	-- Player damage recoil
 	self.recoilDuration = 0.2 -- Duration of recoil effect
@@ -73,8 +75,10 @@ function Player:update(dt, Enemy)
 	-- Update flashing effect
 	if self.isFlashing then
 		self.flashTimer = self.flashTimer - dt
+		self.invincible = true
 		if self.flashTimer <= 0 then
 			self.isFlashing = false
+			self.invincible = false
 		end
 	end
 
@@ -87,7 +91,7 @@ function Player:update(dt, Enemy)
 
 	-- Enemy collisions
 	if self.collider:enter("Enemy") then
-		Player:enemyCollision(1, Enemy)
+		Player:enemyCollision(1, Enemy, self.invincible)
 	end
 end
 
@@ -133,51 +137,53 @@ function Player:move(dt)
 end
 
 -- Take damage from enemies when collision occurs
-function Player:enemyCollision(damage, Enemy)
-	-- Decrease player's health
-	self.health = Player.health - damage
-	print("Player collided with Enemy!")
-	print("Player's Health: ", self.health)
+function Player:enemyCollision(damage, Enemy, status)
+	if not status then
+		-- Decrease player's health
+		self.health = Player.health - damage
+		print("Player collided with Enemy!")
+		print("Player's Health: ", self.health)
 
-	-- TODO play sound effect
-	self.damage_sound:play()
+		-- Play sound effect
+		self.damage_sound:play()
 
-	-- TODO make player flash red
-	self.isFlashing = true
-	self.flashTimer = 0.3
+		-- Make player flash grey
+		self.isFlashing = true
+		self.flashTimer = 1
 
-	-- TODO make player recoil
-	local enemy_x, enemy_y = Enemy.collider:getPosition()
-	local dx = self.x - enemy_x
-	local dy = self.y - enemy_y
-	local magnitude = math.sqrt(dx * dx + dy * dy)
+		-- Make player recoil
+		local enemy_x, enemy_y = Enemy.collider:getPosition()
+		local dx = self.x - enemy_x
+		local dy = self.y - enemy_y
+		local magnitude = math.sqrt(dx * dx + dy * dy)
 
-	if self.health > 0 then
-		self.recoilDirection.x = dx / magnitude
-		self.recoilDirection.y = dy / magnitude
-		self.recoilTimer = self.recoilDuration
-	end
+		if self.health > 0 then
+			self.recoilDirection.x = dx / magnitude
+			self.recoilDirection.y = dy / magnitude
+			self.recoilTimer = self.recoilDuration
+		end
 
-	-- Fade to game over screen if player has died
-	if self.health <= 0 and Game.state == "running" then
-		Game.state = "fading"
-		Game.fadeTimer = 1 -- Reset fade timer
-		Game.fadeAlpha = 1 -- Reset fade alpha
+		-- Fade to game over screen if player has died
+		if self.health <= 0 and Game.state == "running" then
+			Game.state = "fading"
+			Game.fadeTimer = 1 -- Reset fade timer
+			Game.fadeAlpha = 1 -- Reset fade alpha
+		end
 	end
 end
 
 function Player:draw()
 	-- Set player color based on flashing state
 	if self.isFlashing then
-		-- Flash red
-		love.graphics.setColor(1, 0, 0, 0.3)
+		-- Flash opacity
+		love.graphics.setColor(255, 255, 255, 0.5)
 	else
 		-- Normal color
-		love.graphics.setColor(1, 1, 1, 1)
+		love.graphics.setColor(255, 255, 255, 1)
 	end
 
 	self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
 
 	-- Normal color
-	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.setColor(255, 255, 255, 1)
 end
