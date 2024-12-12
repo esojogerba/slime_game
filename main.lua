@@ -178,6 +178,7 @@ function resetGame()
 	-- Reset player
 	Player.health = 5
 	Player.collider:setPosition(50, 50)
+	Player.invincible = false
 	Player.isFlashing = false
 	Player.anim = Player.animations.right
 
