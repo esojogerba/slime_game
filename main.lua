@@ -25,7 +25,7 @@ function love.load()
 	camera = require("libraries/camera")
 
 	-- Map (load default map)
-	Map:load("maps/square_map.lua")
+	Map:load("maps/floor1_1.lua")
 
 	-- Camera
 	cam = camera()
@@ -194,7 +194,7 @@ function resetGame()
 	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
 
 	-- Reset map
-	Map:load("maps/square_map.lua")
+	Map:load("maps/floor1_1.lua")
 
 	-- Reset music
 	Sounds:load("sounds/title.wav")

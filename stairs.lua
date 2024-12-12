@@ -27,7 +27,7 @@ function Stairs:update(dt)
     --(TODO change when all enemies dead)
     if self.collider:enter("Player") then
         if self.locked == false then
-            self:changeLevel("maps/floor_2.lua")
+            self:changeLevel("maps/floor1_2.lua")
         end
         self.stairSprite = love.graphics.newImage("sprites/open.png")
         self.locked = false
