@@ -178,16 +178,20 @@ function resetGame()
 	-- Reset player
 	Player.health = 5
 	Player.collider:setPosition(50, 50)
+	Player.invincible = false
 	Player.isFlashing = false
 	Player.anim = Player.animations.right
 
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
+	Enemy.anim = Enemy.animations.right
 
 	-- Reset stairs
 	Stairs.x = 100
 	Stairs.y = 100
 	Stairs.collider:setPosition(Stairs.x, Stairs.y)
+	Stairs.locked = true
+	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
 
 	-- Reset map
 	Map:load("maps/square_map.lua")
