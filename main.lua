@@ -184,6 +184,7 @@ function resetGame()
 
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
+	Enemy.anim = Enemy.animations.right
 
 	-- Reset stairs
 	Stairs.x = 100
