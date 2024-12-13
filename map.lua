@@ -46,12 +46,6 @@ function Map:update(dt)
     end
 end
 
-function Map:update(dt)
-	if self.gameMap then
-		self.gameMap:update(dt)
-	end
-end
-
 function Map:draw()
     if self.gameMap then
         -- Draw map in layers
