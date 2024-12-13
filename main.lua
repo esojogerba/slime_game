@@ -21,11 +21,25 @@ function love.load()
 	world:addCollisionClass("Enemy", { collidesWith = { "Obstacle", "Player" } })
 	world:addCollisionClass("Stairs", { collidesWith = { "Player" } })
 
+	--list of maps
+	local mapList = {
+		"maps/floor1_1.lua",
+        "maps/floor1_2.lua",
+        "maps/floor1_3.lua",
+		"maps/floor1_4.lua",
+        "maps/floor1_5.lua",
+        "maps/floor1_6.lua",
+		"maps/floor1_7.lua",
+        "maps/floor1_8.lua",
+        "maps/floor1_9.lua",
+		"maps/floor1_10.lua"
+	}
+
 	-- Camera library
 	camera = require("libraries/camera")
 
 	-- Map (load default map)
-	Map:load("maps/floor1_1.lua")
+	Map:load(mapList[1])
 
 	-- Camera
 	cam = camera()
@@ -49,8 +63,8 @@ function love.load()
 		sound = love.audio.newSource("sounds/game_over.wav", "static"),
 	}
 
-	-- Stairs
-	Stairs:load()
+	-- Stairs(list of maps)
+	Stairs:load(mapList)
 
 	-- Player
 	Player:load()
@@ -192,9 +206,11 @@ function resetGame()
 	Stairs.collider:setPosition(Stairs.x, Stairs.y)
 	Stairs.locked = true
 	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
+	Stairs.currentMapIndex = 1
 
 	-- Reset map
-	Map:load("maps/floor1_1.lua")
+	local defaultMap = Stairs.maplist[Stairs.currentMapIndex]
+	Map:load(defaultMap)
 
 	-- Reset music
 	Sounds:load("sounds/title.wav")
