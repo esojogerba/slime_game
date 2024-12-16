@@ -32,7 +32,17 @@ function love.load()
 		"maps/floor1_7.lua",
         "maps/floor1_8.lua",
         "maps/floor1_9.lua",
-		"maps/floor1_10.lua"
+		"maps/floor1_10.lua",
+		"maps/floor2_1.lua",
+        "maps/floor2_2.lua",
+        "maps/floor2_3.lua",
+		"maps/floor2_4.lua",
+        "maps/floor2_5.lua",
+        "maps/floor2_6.lua",
+		"maps/floor2_7.lua",
+        "maps/floor2_8.lua",
+        "maps/floor2_9.lua",
+		"maps/floor2_10.lua"
 	}
 
 	-- Camera library
