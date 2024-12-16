@@ -53,6 +53,7 @@ function Player:load()
 	self.damage_sound = love.audio.newSource("sounds/player_damage.wav", "static")
 
 	-- Attack
+	self.sword_sound = love.audio.newSource("sounds/sword_swing.wav", "static")
 
 	-- Item
 
