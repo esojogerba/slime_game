@@ -24,25 +24,25 @@ function love.load()
 	--list of maps
 	local mapList = {
 		"maps/floor1_1.lua",
-        "maps/floor1_2.lua",
-        "maps/floor1_3.lua",
+		"maps/floor1_2.lua",
+		"maps/floor1_3.lua",
 		"maps/floor1_4.lua",
-        "maps/floor1_5.lua",
-        "maps/floor1_6.lua",
+		"maps/floor1_5.lua",
+		"maps/floor1_6.lua",
 		"maps/floor1_7.lua",
-        "maps/floor1_8.lua",
-        "maps/floor1_9.lua",
+		"maps/floor1_8.lua",
+		"maps/floor1_9.lua",
 		"maps/floor1_10.lua",
 		"maps/floor2_1.lua",
-        "maps/floor2_2.lua",
-        "maps/floor2_3.lua",
+		"maps/floor2_2.lua",
+		"maps/floor2_3.lua",
 		"maps/floor2_4.lua",
-        "maps/floor2_5.lua",
-        "maps/floor2_6.lua",
+		"maps/floor2_5.lua",
+		"maps/floor2_6.lua",
 		"maps/floor2_7.lua",
-        "maps/floor2_8.lua",
-        "maps/floor2_9.lua",
-		"maps/floor2_10.lua"
+		"maps/floor2_8.lua",
+		"maps/floor2_9.lua",
+		"maps/floor2_10.lua",
 	}
 
 	-- Camera library
@@ -143,7 +143,7 @@ function love.draw()
 		Enemy:draw()
 
 		-- Draw world colliders
-		-- world:draw()
+		world:draw()
 
 		-- Detach camera
 		cam:detach()
@@ -213,7 +213,6 @@ function resetGame()
 	-- Reset stairs
 	Stairs.x = 100
 	Stairs.y = 100
-	Stairs.collider:setPosition(Stairs.x, Stairs.y)
 	Stairs.locked = true
 	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
 	Stairs.currentMapIndex = 1
