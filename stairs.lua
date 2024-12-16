@@ -44,7 +44,7 @@ function Stairs:advanceToNextMap()
     self.currentMapIndex = self.currentMapIndex + 1
 
     --check if game has been won
-    if self.currentMapIndex > 10 then
+    if self.currentMapIndex > 20 then
         print("Congratulations you won!!")
         return
     end
