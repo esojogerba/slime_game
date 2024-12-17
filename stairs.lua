@@ -50,17 +50,28 @@ function Stairs:advanceToNextMap()
     end
 
     --pass new map to change level function
-    local nextMapFile = self.maplist[self.currentMapIndex]
-    self:changeLevel(nextMapFile)
+    self:changeLevel(self.currentMapIndex)
 end
 
 -- Switch map and reload associated objects
-function Stairs:changeLevel(nextMap)
+function Stairs:changeLevel(nextMapIndex)
+
+    --retrieve next map
+    local nextMap = self.maplist[nextMapIndex]
+
     -- Clean up the current map objects
     Map:unload()
 
     -- Load the new map
-    Map:load(nextMap)
+    Map:load(nextMap.file)
+
+    --Set player starting position
+    Player.collider:setPosition(nextMap.playerStart.x, nextMap.playerStart.y)
+
+    --Set stairs starting position
+    self.x = nextMap.stairsStart.x
+    self.y = nextMap.stairsStart.y
+    self.collider:setPosition(self.x + 8, self.y + 8)
 
     -- Reset stairs for the new map (if reused in multiple levels)
     --Needs work
