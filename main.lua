@@ -23,33 +23,33 @@ function love.load()
 
 	--list of maps
 	local mapList = {
-		"maps/floor1_1.lua",
-		"maps/floor1_2.lua",
-		"maps/floor1_3.lua",
-		"maps/floor1_4.lua",
-		"maps/floor1_5.lua",
-		"maps/floor1_6.lua",
-		"maps/floor1_7.lua",
-		"maps/floor1_8.lua",
-		"maps/floor1_9.lua",
-		"maps/floor1_10.lua",
-		"maps/floor2_1.lua",
-		"maps/floor2_2.lua",
-		"maps/floor2_3.lua",
-		"maps/floor2_4.lua",
-		"maps/floor2_5.lua",
-		"maps/floor2_6.lua",
-		"maps/floor2_7.lua",
-		"maps/floor2_8.lua",
-		"maps/floor2_9.lua",
-		"maps/floor2_10.lua",
+		{file = "maps/floor1_1.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_2.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_3.lua", playerStart = {x = 150 , y = 50}, stairsStart = {x = 150, y = 250}},
+		{file = "maps/floor1_4.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_5.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_6.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_7.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_8.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_9.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor1_10.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_1.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_2.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_3.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_4.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_5.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_6.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_7.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_8.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_9.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}},
+		{file = "maps/floor2_10.lua", playerStart = {x = 50 , y = 50}, stairsStart = {x = 100, y = 100}}
 	}
 
 	-- Camera library
 	camera = require("libraries/camera")
 
 	-- Map (load default map)
-	Map:load(mapList[1])
+	Map:load(mapList[1].file)
 
 	-- Camera
 	cam = camera()
@@ -78,6 +78,7 @@ function love.load()
 
 	-- Player
 	Player:load()
+	Player.collider:setPosition(mapList[1].playerStart.x, mapList[1].playerStart.y)
 
 	-- Enemy
 	Enemy:load()
@@ -200,8 +201,10 @@ function resetGame()
 	Game.fadeAlpha = 1
 
 	-- Reset player
+	Stairs.currentMapIndex = 1
+	local firstMap = Stairs.maplist[Stairs.currentMapIndex]
 	Player.health = 5
-	Player.collider:setPosition(50, 50)
+	Player.collider:setPosition(firstMap.playerStart.x, firstMap.playerStart.y)
 	Player.invincible = false
 	Player.isFlashing = false
 	Player.anim = Player.animations.right
@@ -211,15 +214,14 @@ function resetGame()
 	Enemy.anim = Enemy.animations.right
 
 	-- Reset stairs
-	Stairs.x = 100
-	Stairs.y = 100
+	Stairs.x = firstMap.stairsStart.x
+	Stairs.y = firstMap.stairsStart.y
+	Stairs.collider:setPosition(Stairs.x + 8, Stairs.y + 8)
 	Stairs.locked = true
 	Stairs.stairSprite = love.graphics.newImage("sprites/locked.png")
-	Stairs.currentMapIndex = 1
 
 	-- Reset map
-	local defaultMap = Stairs.maplist[Stairs.currentMapIndex]
-	Map:load(defaultMap)
+	Map:load(firstMap.file)
 
 	-- Reset music
 	Sounds:load("sounds/title.wav")
