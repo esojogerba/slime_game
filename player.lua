@@ -34,7 +34,7 @@ function Player:load()
 	self.recoilDirection = { x = 0, y = 0 } -- Direction to recoil
 
 	-- Sprite and grid
-	self.spriteSheet = love.graphics.newImage("sprites/mainSlime.png")
+	self.spriteSheet = love.graphics.newImage("sprites/player/mainSlime.png")
 	self.grid = anim8.newGrid(12, 10, self.spriteSheet:getWidth(), self.spriteSheet:getHeight())
 
 	-- Animations
@@ -50,10 +50,10 @@ function Player:load()
 	-- TODO Sounds
 
 	-- Damage
-	self.damage_sound = love.audio.newSource("sounds/player_damage.wav", "static")
+	self.damage_sound = love.audio.newSource("sounds/player/player_damage.wav", "static")
 
 	-- Attack
-	self.sword_sound = love.audio.newSource("sounds/sword_swing.wav", "static")
+	self.sword_sound = love.audio.newSource("sounds/player/sword_swing.wav", "static")
 
 	-- Item
 
