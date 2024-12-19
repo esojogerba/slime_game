@@ -9,8 +9,8 @@ function Stairs:load(mapList)
     self.locked = true
 
     --hard code stair position (needs work)
-    self.x = 100
-    self.y = 100
+    self.x = mapList[1].stairsStart.x
+    self.y = mapList[1].stairsStart.y
 
     --set stairs collider
     self.collider = world:newRectangleCollider(self.x, self.y, 16, 16)
