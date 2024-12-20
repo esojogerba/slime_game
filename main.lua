@@ -1,8 +1,8 @@
-require("player")
-require("map")
-require("enemy")
-require("sounds")
-require("stairs")
+require("src/player")
+require("src/map")
+require("src/enemy")
+require("src/sounds")
+require("src/stairs")
 
 function love.load()
 	-- Print to console
