@@ -1,5 +1,5 @@
-require("player")
-require("map")
+require("src/player")
+require("src/map")
 
 Stairs = {}
 
