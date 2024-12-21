@@ -45,6 +45,7 @@ function Enemy:load()
 	self.damage_sound = love.audio.newSource("sounds/enemies/enemy_damage.wav", "static")
 
 	-- Death
+	self.death_sound = love.audio.newSource("sounds/enemies/enemy_death.wav", "static")
 end
 
 function Enemy:update(dt, player)
@@ -104,11 +105,18 @@ function Enemy:weaponCollision(damage, player, death_status)
 		-- Play damage sound
 		self.damage_sound:play()
 
-		-- If player is out of health, change death_status
+		-- TODO Damage flash
+
+		-- TODO Damage recoil
+
+		-- If player is out of health
 		if self.health <= 0 then
+			-- Trigger death status
 			self.death_status = true
 			-- Destroy collider
 			self.collider:destroy()
+			-- Play death sound
+			self.death_sound:play()
 		end
 	end
 end
