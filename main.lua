@@ -83,7 +83,7 @@ function love.load()
 	Stairs:load(mapList)
 
 	-- Player
-	Player:load()
+	Player:load(Sword)
 	Player.collider:setPosition(mapList[1].playerStart.x, mapList[1].playerStart.y)
 
 	-- Sword
