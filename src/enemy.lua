@@ -21,6 +21,9 @@ function Enemy:load()
 	-- Speed
 	self.speed = 50
 
+	-- Health
+	self.health = 2
+
 	-- Sprite and grid
 	self.spriteSheet = love.graphics.newImage("sprites/enemies/brownSlime.png")
 	self.grid = anim8.newGrid(12, 10, self.spriteSheet:getWidth(), self.spriteSheet:getHeight())
