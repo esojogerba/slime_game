@@ -75,6 +75,12 @@ function Enemy:update(dt, player)
 	self.x, self.y = self.collider:getPosition()
 
 	self.anim:update(dt)
+
+	-- Take damage from player's weapon
+	if self.collider:enter("Player Weapon") then
+		self.health = self.health - 1
+		print("Enemy damaged, health: ", self.health)
+	end
 end
 
 function Enemy:draw()
