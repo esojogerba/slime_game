@@ -100,7 +100,7 @@ function Player:update(dt, Enemy)
 	self.sword:update(dt)
 
 	-- Handle sword attack
-	if love.keyboard.isDown("space") and not self.sword.isActive then
+	if love.keyboard.isDown("space") and not self.sword.isActive and self.sword.cooldownTimer <= 0 then
 		self.sword_sound:play()
 		self.sword:attack(dt)
 	end
