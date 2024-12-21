@@ -47,6 +47,9 @@ function Player:load()
 	-- Player's current animation
 	self.anim = self.animations.right
 
+	-- Player's current direction
+	self.curr_direction = "right"
+
 	-- TODO Sounds
 
 	-- Damage
@@ -105,24 +108,28 @@ function Player:move(dt)
 	-- Player moves right
 	if love.keyboard.isDown("right") then
 		vx = self.speed
-		self.anim = self.animations.right
 		self.animations.down = self.animations.right
+		self.anim = self.animations.right
+		self.curr_direction = "right"
 	end
 	-- Player moves left
 	if love.keyboard.isDown("left") then
 		vx = self.speed * -1
-		self.anim = self.animations.left
 		self.animations.down = self.animations.left
+		self.anim = self.animations.left
+		self.curr_direction = "left"
 	end
 	-- Player moves up
 	if love.keyboard.isDown("up") then
 		vy = self.speed * -1
 		self.anim = self.animations.up
+		self.curr_direction = "up"
 	end
 	-- Player moves down
 	if love.keyboard.isDown("down") then
 		vy = self.speed
 		self.anim = self.animations.down
+		self.curr_direction = "down"
 	end
 	-- Player moves in a diagonal direction
 	if vx ~= 0 and vy ~= 0 then
