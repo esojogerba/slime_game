@@ -22,6 +22,7 @@ function Sword:load(player)
 	-- Status
 	self.isActive = false -- Sword is only active during an attack
 	self.activeTimer = 0
+	self.cooldownTimer = 0 -- Timer to track cooldown period
 
 	-- Rotation
 	self.rotation = 0
@@ -36,7 +37,12 @@ function Sword:update(dt)
 		end
 	end
 
-	-- Move sprite depending on player's position
+	-- Handle the cooldown timer
+	if self.cooldownTimer > 0 then
+		self.cooldownTimer = self.cooldownTimer - dt
+	end
+
+	-- Rotate sword sprite depending on player's direction
 	self:move()
 
 	-- Match sword's position with collider position
@@ -51,6 +57,7 @@ function Sword:update(dt)
 	end
 end
 
+-- Rotate sword sprite depending on player's direction
 function Sword:move()
 	local offsetX, offsetY = 0, 0
 
@@ -91,9 +98,13 @@ function Sword:move()
 	self.collider:setType("static")
 end
 
+-- Activates weapon collision class and active timer to deal damage to enemies
 function Sword:attack(dt)
-	self.activeTimer = 2
-	self.isActive = true
+	if self.cooldownTimer <= 0 then
+		self.isActive = true
+		self.activeTimer = 1 -- Sword is active for 1 second
+		self.cooldownTimer = 1.2 -- Cooldown duration (e.g., 1 second)
+	end
 end
 
 function Sword:draw()
