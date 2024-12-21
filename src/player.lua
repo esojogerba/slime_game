@@ -1,6 +1,6 @@
 Player = {}
 
-function Player:load()
+function Player:load(sword)
 	-- Anim8 library
 	anim8 = require("libraries/anim8")
 
@@ -50,6 +50,10 @@ function Player:load()
 	-- Player's current direction
 	self.curr_direction = "right"
 
+	-- Player's sword
+	self.sword = Sword
+	self.sword:load(self)
+
 	-- TODO Sounds
 
 	-- Damage
@@ -92,6 +96,14 @@ function Player:update(dt, Enemy)
 
 	-- Update animation
 	self.anim:update(dt)
+
+	self.sword:update(dt)
+
+	-- Handle sword attack
+	if love.keyboard.isDown("space") and not self.sword.isActive then
+		self.sword_sound:play()
+		self.sword:attack(dt)
+	end
 
 	-- Enemy collisions
 	if self.collider:enter("Enemy") then
@@ -190,6 +202,7 @@ function Player:draw()
 		love.graphics.setColor(255, 255, 255, 1)
 	end
 
+	self.sword:draw()
 	self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
 
 	-- Normal color
