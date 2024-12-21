@@ -20,13 +20,22 @@ function Sword:load(player)
 	self.sprite = love.graphics.newImage("sprites/weapons/sword.png")
 
 	-- Status
-	self.isActive = true -- Sword is only active during an attack
+	self.isActive = false -- Sword is only active during an attack
+	self.activeTimer = 0
 
 	-- Rotation
 	self.rotation = 0
 end
 
 function Sword:update(dt)
+	-- Handle the sword's timer
+	if self.isActive then
+		self.activeTimer = self.activeTimer - dt -- Decrease timer by delta time
+		if self.activeTimer <= 0 then
+			self.isActive = false -- Deactivate sword after 2 seconds
+		end
+	end
+
 	-- Move sprite depending on player's position
 	self:move()
 
@@ -80,6 +89,11 @@ function Sword:move()
 	end
 
 	self.collider:setType("static")
+end
+
+function Sword:attack(dt)
+	self.activeTimer = 2
+	self.isActive = true
 end
 
 function Sword:draw()
