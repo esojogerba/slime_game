@@ -125,7 +125,7 @@ function love.update(dt)
 		Sword:update(dt)
 
 		-- Enemy
-		Enemy:update(dt, Player)
+		Enemy:update(dt, Player, Sword)
 
 		-- Stairs
 		Stairs:update(dt)
