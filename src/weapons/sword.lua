@@ -102,8 +102,8 @@ end
 function Sword:attack(dt)
 	if self.cooldownTimer <= 0 then
 		self.isActive = true
-		self.activeTimer = 1 -- Sword is active for 1 second
-		self.cooldownTimer = 1.2 -- Cooldown duration (e.g., 1 second)
+		self.activeTimer = 0.5 -- Sword is active for 1 second
+		self.cooldownTimer = 0.8 -- Cooldown duration (e.g., 1 second)
 	end
 end
 
