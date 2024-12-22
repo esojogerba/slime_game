@@ -177,6 +177,7 @@ function Player:enemyCollision(damage, Enemy, status)
 		local dy = self.y - enemy_y
 		local magnitude = math.sqrt(dx * dx + dy * dy)
 
+		-- If player is not dead, calculate recoil
 		if self.health > 0 then
 			self.recoilDirection.x = dx / magnitude
 			self.recoilDirection.y = dy / magnitude
