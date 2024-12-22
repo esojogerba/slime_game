@@ -22,11 +22,15 @@ function Enemy:load()
 	self.speed = 50
 
 	-- Health
-	self.health = 10
+	self.health = 5
 
 	-- Damage cooldown
 	self.damageCooldown = 0.5 -- Time in seconds before the enemy can take damage again
 	self.damageCooldownTimer = 0 -- Tracks the remaining cooldown time
+
+	-- Damage flash
+	self.flashTimer = 0 -- Timer for opacity flash effect
+	self.isFlashing = false -- Whether the enemy is flashing
 
 	-- Enemy damage recoil
 	self.recoilDuration = 0.2 -- Duration of recoil effect
@@ -35,6 +39,10 @@ function Enemy:load()
 
 	-- Death status
 	self.death_status = false
+
+	-- Fade-out effect
+	self.fadeAlpha = 1 -- Fully opaque at the start
+	self.fadeDuration = 0.3 -- Fade-out duration in seconds
 
 	-- Sprite and grid
 	self.spriteSheet = love.graphics.newImage("sprites/enemies/brownSlime.png")
@@ -47,8 +55,6 @@ function Enemy:load()
 	self.animations.up = anim8.newAnimation(self.grid("1-4", 3), 0.2)
 	self.animations.down = self.animations.right
 	self.anim = self.animations.right
-
-	-- TODO Sounds
 
 	-- Damage
 	self.damage_sound = love.audio.newSource("sounds/enemies/enemy_damage.wav", "static")
@@ -106,6 +112,14 @@ function Enemy:update(dt, player, sword)
 			end
 		end
 
+		-- Update flashing effect
+		if self.isFlashing then
+			self.flashTimer = self.flashTimer - dt
+			if self.flashTimer <= 0 then
+				self.isFlashing = false
+			end
+		end
+
 		-- Update x and y variables using collider's position
 		self.x, self.y = self.collider:getPosition()
 
@@ -115,6 +129,15 @@ function Enemy:update(dt, player, sword)
 		if self.damageCooldownTimer <= 0 and self.collider:enter("Player Weapon") then
 			self:weaponCollision(1, sword, self.death_status)
 		end
+	elseif self.death_status then
+		-- Gradually reduce the alpha during the fade-out period
+		if self.fadeAlpha > 0 then
+			self.fadeAlpha = self.fadeAlpha - (dt / self.fadeDuration)
+		else
+			-- Ensure alpha does not go below 0
+			self.fadeAlpha = 0
+		end
+		return -- Skip normal behavior when the enemy is dead
 	end
 end
 
@@ -128,12 +151,13 @@ function Enemy:weaponCollision(damage, sword, death_status)
 		-- Play damage sound
 		self.damage_sound:play()
 
-		-- Stop moving towards player
+		-- Stop moving
 		self.collider:setLinearVelocity(0, 0)
 
-		-- TODO Damage flash
+		-- Make sprite flash grey
+		self.isFlashing = true
+		self.flashTimer = 0.2
 
-		-- TODO Damage recoil
 		-- Recoil variables
 		local sword_x, sword_y = sword.collider:getPosition()
 		local dx = self.x - sword_x
@@ -152,6 +176,8 @@ function Enemy:weaponCollision(damage, sword, death_status)
 		if self.health <= 0 then
 			-- Trigger death status
 			self.death_status = true
+			-- Stop movement
+			self.collider:setLinearVelocity(0, 0)
 			-- Destroy collider
 			self.collider:destroy()
 			-- Play death sound
@@ -164,7 +190,19 @@ function Enemy:weaponCollision(damage, sword, death_status)
 end
 
 function Enemy:draw()
-	if not self.death_status then
+	if not self.death_status or self.fadeAlpha > 0 then
+		-- Set enemy color based on flashing state
+		if self.isFlashing then
+			-- Flash opacity
+			love.graphics.setColor(0, 0, 0, self.fadeAlpha * 0.4)
+		else
+			-- Normal color
+			love.graphics.setColor(255, 255, 255, self.fadeAlpha)
+		end
+
 		self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
+
+		-- Normal color
+		love.graphics.setColor(255, 255, 255, 1)
 	end
 end
