@@ -1,6 +1,6 @@
 Player = {}
 
-function Player:load()
+function Player:load(sword)
 	-- Anim8 library
 	anim8 = require("libraries/anim8")
 
@@ -47,6 +47,13 @@ function Player:load()
 	-- Player's current animation
 	self.anim = self.animations.right
 
+	-- Player's current direction
+	self.curr_direction = "right"
+
+	-- Player's sword
+	self.sword = Sword
+	self.sword:load(self)
+
 	-- TODO Sounds
 
 	-- Damage
@@ -90,6 +97,14 @@ function Player:update(dt, Enemy)
 	-- Update animation
 	self.anim:update(dt)
 
+	self.sword:update(dt)
+
+	-- Handle sword attack
+	if love.keyboard.isDown("space") and not self.sword.isActive and self.sword.cooldownTimer <= 0 then
+		self.sword_sound:play()
+		self.sword:attack(dt)
+	end
+
 	-- Enemy collisions
 	if self.collider:enter("Enemy") then
 		Player:enemyCollision(1, Enemy, self.invincible)
@@ -105,24 +120,28 @@ function Player:move(dt)
 	-- Player moves right
 	if love.keyboard.isDown("right") then
 		vx = self.speed
-		self.anim = self.animations.right
 		self.animations.down = self.animations.right
+		self.anim = self.animations.right
+		self.curr_direction = "right"
 	end
 	-- Player moves left
 	if love.keyboard.isDown("left") then
 		vx = self.speed * -1
-		self.anim = self.animations.left
 		self.animations.down = self.animations.left
+		self.anim = self.animations.left
+		self.curr_direction = "left"
 	end
 	-- Player moves up
 	if love.keyboard.isDown("up") then
 		vy = self.speed * -1
 		self.anim = self.animations.up
+		self.curr_direction = "up"
 	end
 	-- Player moves down
 	if love.keyboard.isDown("down") then
 		vy = self.speed
 		self.anim = self.animations.down
+		self.curr_direction = "down"
 	end
 	-- Player moves in a diagonal direction
 	if vx ~= 0 and vy ~= 0 then
@@ -158,6 +177,7 @@ function Player:enemyCollision(damage, Enemy, status)
 		local dy = self.y - enemy_y
 		local magnitude = math.sqrt(dx * dx + dy * dy)
 
+		-- If player is not dead, calculate recoil
 		if self.health > 0 then
 			self.recoilDirection.x = dx / magnitude
 			self.recoilDirection.y = dy / magnitude
@@ -183,6 +203,7 @@ function Player:draw()
 		love.graphics.setColor(255, 255, 255, 1)
 	end
 
+	self.sword:draw()
 	self.anim:draw(self.spriteSheet, self.x, self.y, nil, 2, 2, 6, 5)
 
 	-- Normal color

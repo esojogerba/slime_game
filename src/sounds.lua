@@ -5,6 +5,7 @@ function Sounds:load(soundFile)
 	self:unload()
 
 	self.currentSong = love.audio.newSource(soundFile, "stream")
+	self.currentSong:setVolume(0.5)
 	self.currentSong:setLooping(true)
 
 	self.currentSong:play()

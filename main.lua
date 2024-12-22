@@ -3,6 +3,7 @@ require("src/map")
 require("src/enemy")
 require("src/sounds")
 require("src/stairs")
+require("src/weapons/sword")
 
 function love.load()
 	-- Print to console
@@ -20,6 +21,11 @@ function love.load()
 	world:addCollisionClass("Player", { collidesWith = { "Obstacle", "Enemy" } })
 	world:addCollisionClass("Enemy", { collidesWith = { "Obstacle", "Player" } })
 	world:addCollisionClass("Stairs", { collidesWith = { "Player" } })
+	world:addCollisionClass(
+		"Player Weapon",
+		{ collidesWith = { "Enemy" }, ignores = { "Player", "Obstacle", "Stairs" } }
+	)
+	world:addCollisionClass("None", { ignores = { "Enemy", "Player", "Obstacle", "Stairs" } })
 
 	--list of maps
 	local mapList = {
@@ -77,8 +83,11 @@ function love.load()
 	Stairs:load(mapList)
 
 	-- Player
-	Player:load()
+	Player:load(Sword)
 	Player.collider:setPosition(mapList[1].playerStart.x, mapList[1].playerStart.y)
+
+	-- Sword
+	Sword:load(Player)
 
 	-- Enemy
 	Enemy:load()
@@ -112,8 +121,11 @@ function love.update(dt)
 		-- Player
 		Player:update(dt, Enemy)
 
+		-- Sword
+		Sword:update(dt)
+
 		-- Enemy
-		Enemy:update(dt, Player)
+		Enemy:update(dt, Player, Sword)
 
 		-- Stairs
 		Stairs:update(dt)
@@ -139,6 +151,9 @@ function love.draw()
 
 		-- Player
 		Player:draw()
+
+		-- Sword
+		Sword:draw()
 
 		-- Enemy
 		Enemy:draw()
