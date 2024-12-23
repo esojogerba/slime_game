@@ -159,7 +159,7 @@ function love.draw()
 		Enemy:draw()
 
 		-- Draw world colliders
-		world:draw()
+		-- world:draw()
 
 		-- Detach camera
 		cam:detach()
@@ -227,6 +227,9 @@ function resetGame()
 	-- Reset enemies
 	Enemy.collider:setPosition(250, 250)
 	Enemy.anim = Enemy.animations.right
+	Enemy.isFlashing = false
+	Enemy.death_status = false
+	Enemy.health = 5
 
 	-- Reset stairs
 	Stairs.x = firstMap.stairsStart.x
