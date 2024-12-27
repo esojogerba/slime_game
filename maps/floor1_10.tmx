@@ -64,20 +64,11 @@
   <object id="88" x="224" y="240" width="32" height="32"/>
   <object id="89" x="64" y="240" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="6" name="Enemies">
-  <object id="90" x="48" y="160">
-   <point/>
-  </object>
-  <object id="91" x="64" y="128">
-   <point/>
-  </object>
+ <objectgroup id="6" name="Enemies" locked="1">
   <object id="92" name="brownSlime" x="80" y="160">
    <point/>
   </object>
   <object id="93" name="brownSlime" x="144" y="160">
-   <point/>
-  </object>
-  <object id="94" x="160" y="128">
    <point/>
   </object>
   <object id="95" name="brownSlime" x="176" y="160">

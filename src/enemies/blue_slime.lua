@@ -20,8 +20,11 @@ local function blueInit(enemy, x, y)
 	-- Speed
 	enemy.speed = 70
 
+	-- Damage to player
+	enemy.damage = 2
+
 	-- Health
-	enemy.health = 7
+	enemy.health = 5
 
 	-- Sprite and grid
 	enemy.spriteSheet = love.graphics.newImage("sprites/enemies/blueSlime.png")

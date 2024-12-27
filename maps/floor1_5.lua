@@ -312,7 +312,7 @@ return {
       objects = {
         {
           id = 47,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 64,
@@ -325,7 +325,7 @@ return {
         },
         {
           id = 48,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 160,
@@ -338,7 +338,7 @@ return {
         },
         {
           id = 49,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 208,
@@ -351,7 +351,7 @@ return {
         },
         {
           id = 50,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 160,
@@ -364,7 +364,7 @@ return {
         },
         {
           id = 51,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 256,
@@ -377,7 +377,7 @@ return {
         },
         {
           id = 52,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 288,
@@ -390,7 +390,7 @@ return {
         },
         {
           id = 53,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 208,
@@ -403,7 +403,7 @@ return {
         },
         {
           id = 54,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 208,
@@ -416,7 +416,7 @@ return {
         },
         {
           id = 55,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 64,
@@ -429,7 +429,7 @@ return {
         },
         {
           id = 56,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 128,
@@ -442,7 +442,7 @@ return {
         },
         {
           id = 57,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 144,
