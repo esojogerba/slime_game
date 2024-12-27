@@ -9,8 +9,8 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextlayerid = 6,
-  nextobjectid = 32,
+  nextlayerid = 7,
+  nextobjectid = 36,
   properties = {},
   tilesets = {
     {
@@ -290,6 +290,61 @@ return {
           y = 0,
           width = 288,
           height = 8,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "topdown",
+      id = 6,
+      name = "Enemies",
+      class = "",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      parallaxx = 1,
+      parallaxy = 1,
+      properties = {},
+      objects = {
+        {
+          id = 32,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 240,
+          y = 128,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 34,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 48,
+          y = 160,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 35,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 176,
+          y = 272,
+          width = 0,
+          height = 0,
           rotation = 0,
           visible = true,
           properties = {}
