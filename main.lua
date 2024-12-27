@@ -208,18 +208,15 @@ function resetGame()
 	-- Stop game over sound
 	Game.sound:stop()
 
-	-- Reset game state variables
-	Game.state = "running"
-	Game.fadeTimer = 1
-	Game.fadeAlpha = 1
-
-	-- Reset player
+	-- Reset map index to be first level
 	Stairs.currentMapIndex = 1
 	local firstMap = Stairs.maplist[Stairs.currentMapIndex]
+
+	-- Reset player
 	Player.health = 5
-	Player.collider:setPosition(firstMap.playerStart.x, firstMap.playerStart.y)
 	Player.invincible = false
 	Player.isFlashing = false
+	Player.collider:setPosition(firstMap.playerStart.x, firstMap.playerStart.y)
 	Player.anim = Player.animations.right
 
 	-- Reset stairs
@@ -237,4 +234,9 @@ function resetGame()
 
 	-- Reset music
 	Sounds:load("sounds/music/title.wav")
+
+	-- Reset game state variables
+	Game.state = "running"
+	Game.fadeTimer = 1
+	Game.fadeAlpha = 1
 end
