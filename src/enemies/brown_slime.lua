@@ -20,8 +20,11 @@ local function brownInit(enemy, x, y)
 	-- Speed
 	enemy.speed = 50
 
+	-- Damage to player
+	enemy.damage = 1
+
 	-- Health
-	enemy.health = 5
+	enemy.health = 3
 
 	-- Sprite and grid
 	enemy.spriteSheet = love.graphics.newImage("sprites/enemies/brownSlime.png")
