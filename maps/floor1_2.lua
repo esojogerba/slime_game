@@ -325,7 +325,7 @@ return {
         },
         {
           id = 34,
-          name = "blueSlime",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 48,

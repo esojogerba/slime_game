@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="57">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="64">
  <editorsettings>
   <export target="floor1_6.lua" format="lua"/>
  </editorsettings>
@@ -69,5 +69,28 @@
   <object id="54" x="64" y="160" width="16" height="16"/>
   <object id="55" x="96" y="272" width="32" height="32"/>
   <object id="56" x="192" y="272" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="6" name="Enemies">
+  <object id="57" name="brownSlime" x="48" y="128">
+   <point/>
+  </object>
+  <object id="58" name="brownSlime" x="112" y="160">
+   <point/>
+  </object>
+  <object id="59" name="brownSlime" x="176" y="112">
+   <point/>
+  </object>
+  <object id="60" name="brownSlime" x="144" y="240">
+   <point/>
+  </object>
+  <object id="61" name="brownSlime" x="240" y="192">
+   <point/>
+  </object>
+  <object id="62" name="brownSlime" x="272" y="64">
+   <point/>
+  </object>
+  <object id="63" name="brownSlime" x="48" y="192">
+   <point/>
+  </object>
  </objectgroup>
 </map>

@@ -72,7 +72,7 @@
   <object id="32" name="brownSlime" x="240" y="128">
    <point/>
   </object>
-  <object id="34" name="blueSlime" x="48" y="160">
+  <object id="34" name="brownSlime" x="48" y="160">
    <point/>
   </object>
   <object id="35" name="brownSlime" x="176" y="272">

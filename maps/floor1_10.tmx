@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="90">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="108">
  <editorsettings>
-  <export target="floor1_9.lua" format="lua"/>
+  <export target="floor1_10.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="AdventureBegins_Demo" tilewidth="16" tileheight="16" tilecount="589" columns="19">
   <image source="AdventureBegins_Demo.png" width="304" height="496"/>
@@ -63,5 +63,61 @@
   <object id="87" x="224" y="48" width="32" height="32"/>
   <object id="88" x="224" y="240" width="32" height="32"/>
   <object id="89" x="64" y="240" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="6" name="Enemies">
+  <object id="90" x="48" y="160">
+   <point/>
+  </object>
+  <object id="91" x="64" y="128">
+   <point/>
+  </object>
+  <object id="92" x="80" y="160">
+   <point/>
+  </object>
+  <object id="93" x="144" y="160">
+   <point/>
+  </object>
+  <object id="94" x="160" y="128">
+   <point/>
+  </object>
+  <object id="95" x="176" y="160">
+   <point/>
+  </object>
+  <object id="96" x="240" y="160">
+   <point/>
+  </object>
+  <object id="97" x="256" y="128">
+   <point/>
+  </object>
+  <object id="98" x="272" y="160">
+   <point/>
+  </object>
+  <object id="99" x="96" y="224">
+   <point/>
+  </object>
+  <object id="100" x="112" y="192">
+   <point/>
+  </object>
+  <object id="101" x="128" y="224">
+   <point/>
+  </object>
+  <object id="102" x="192" y="224">
+   <point/>
+  </object>
+  <object id="103" x="208" y="192">
+   <point/>
+  </object>
+  <object id="104" x="224" y="224">
+   <point/>
+  </object>
+  <object id="105" x="128" y="288">
+   <point/>
+  </object>
+  <object id="106" x="160" y="288">
+   <point/>
+  </object>
+  <object id="107" x="192" y="288">
+   <point/>
+  </object>
  </objectgroup>
 </map>
