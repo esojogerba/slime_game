@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="16">
  <editorsettings>
-  <export target="square_map.lua" format="lua"/>
+  <export target="floor1_1.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="AdventureBegins_Demo" tilewidth="16" tileheight="16" tilecount="589" columns="19">
   <image source="AdventureBegins_Demo.png" width="304" height="496"/>
