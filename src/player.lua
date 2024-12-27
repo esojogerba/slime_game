@@ -68,7 +68,7 @@ function Player:load(sword)
 end
 
 -- TODO Check enemy collision with all enemies
-function Player:update(dt, Enemy)
+function Player:update(dt, enemies)
 	-- Recoil from damage or move normally
 	if self.recoilTimer > 0 then
 		-- Apply recoil movement
@@ -109,7 +109,9 @@ function Player:update(dt, Enemy)
 	-- Enemy collisions
 	-- TODO check collision with all enemies, detect which enemy we collided with potentially
 	if self.collider:enter("Enemy") then
-		Player:enemyCollision(1, Enemy, self.invincible)
+		for i, e in ipairs(enemies) do
+			Player:enemyCollision(1, e, self.invincible)
+		end
 	end
 end
 
