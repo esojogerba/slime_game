@@ -157,7 +157,7 @@ function love.draw()
 		enemies:draw()
 
 		-- Draw world colliders
-		world:draw()
+		-- world:draw()
 
 		-- Detach camera
 		cam:detach()
@@ -216,6 +216,7 @@ function resetGame()
 	Player.health = 5
 	Player.invincible = false
 	Player.isFlashing = false
+	Player.recoilTimer = 0
 	Player.collider:setPosition(firstMap.playerStart.x, firstMap.playerStart.y)
 	Player.anim = Player.animations.right
 
