@@ -84,6 +84,17 @@ function enemies:update(dt)
 	end
 end
 
+function enemies:reset()
+	for i, e in ipairs(self) do
+		e.collider:destroy()
+	end
+
+	-- Clear the enemies table
+	for i = #enemies, 1, -1 do
+		table.remove(enemies, i)
+	end
+end
+
 function enemies:draw()
 	for i, e in ipairs(self) do
 		e:draw()
