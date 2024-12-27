@@ -4,8 +4,11 @@ require("src/map")
 Stairs = {}
 
 function Stairs:load(mapList)
+	-- Smooth scaling
+	love.graphics.setDefaultFilter("nearest", "nearest")
+
 	--load stairs sprite
-	self.stairSprite = love.graphics.newImage("sprites/level/locked.png")
+	self.stairSprite = love.graphics.newImage("sprites/level/trap_door.png")
 	self.locked = true
 
 	--hard code stair position (needs work)
@@ -33,7 +36,7 @@ function Stairs:update(dt)
 		if self.locked == false then
 			self:advanceToNextMap()
 		else
-			self.stairSprite = love.graphics.newImage("sprites/level/open.png")
+			self.stairSprite = love.graphics.newImage("sprites/level/stairs.png")
 			self.locked = false
 		end
 	end
@@ -75,7 +78,7 @@ function Stairs:changeLevel(nextMapIndex)
 	-- Reset stairs for the new map (if reused in multiple levels)
 	--Needs work
 	self.locked = true
-	self.stairSprite = love.graphics.newImage("sprites/level/locked.png")
+	self.stairSprite = love.graphics.newImage("sprites/level/trap_door.png")
 end
 
 function Stairs:draw()

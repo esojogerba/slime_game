@@ -1,6 +1,7 @@
 require("src/player")
 require("src/map")
-require("src/enemy")
+require("src/enemies/brown_slime")
+require("src/enemies/blue_slime")
 require("src/sounds")
 require("src/stairs")
 require("src/weapons/sword")
@@ -90,7 +91,8 @@ function love.load()
 	Sword:load(Player)
 
 	-- Enemy
-	Enemy:load()
+	BrownSlime:load()
+	BlueSlime:load()
 
 	-- Sounds
 	Sounds:load("sounds/music/title.wav")
@@ -119,13 +121,17 @@ function love.update(dt)
 		Map:update(dt)
 
 		-- Player
-		Player:update(dt, Enemy)
+		-- TODO pass all enemies into player
+		Player:update(dt, BrownSlime)
 
 		-- Sword
 		Sword:update(dt)
 
-		-- Enemy
-		Enemy:update(dt, Player, Sword)
+		-- BrownSlime
+		BrownSlime:update(dt, Player, Sword)
+
+		-- BlueSlime
+		BlueSlime:update(dt, Player, Sword)
 
 		-- Stairs
 		Stairs:update(dt)
@@ -156,7 +162,10 @@ function love.draw()
 		Sword:draw()
 
 		-- Enemy
-		Enemy:draw()
+		BrownSlime:draw()
+
+		-- Enemy
+		BlueSlime:draw()
 
 		-- Draw world colliders
 		world:draw()
@@ -225,8 +234,12 @@ function resetGame()
 	Player.anim = Player.animations.right
 
 	-- Reset enemies
-	Enemy.collider:setPosition(250, 250)
-	Enemy.anim = Enemy.animations.right
+	BrownSlime.collider:setPosition(250, 250)
+	BrownSlime.anim = BrownSlime.animations.right
+
+	-- Reset enemies
+	BlueSlime.collider:setPosition(150, 150)
+	BlueSlime.anim = BlueSlime.animations.right
 
 	-- Reset stairs
 	Stairs.x = firstMap.stairsStart.x

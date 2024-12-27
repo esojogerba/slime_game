@@ -67,6 +67,7 @@ function Player:load(sword)
 	-- Use Stairs
 end
 
+-- TODO Check enemy collision with all enemies
 function Player:update(dt, Enemy)
 	-- Recoil from damage or move normally
 	if self.recoilTimer > 0 then
@@ -106,6 +107,7 @@ function Player:update(dt, Enemy)
 	end
 
 	-- Enemy collisions
+	-- TODO check collision with all enemies, detect which enemy we collided with potentially
 	if self.collider:enter("Enemy") then
 		Player:enemyCollision(1, Enemy, self.invincible)
 	end
