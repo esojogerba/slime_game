@@ -76,8 +76,10 @@ function enemies:update(dt)
 
 	-- Iterate through all enemies in reverse to remove the dead ones
 	for i = #enemies, 1, -1 do
-		if enemies[i].dead then
+		if enemies[i].death_status then
+			print(enemies[i])
 			table.remove(enemies, i)
+			print(enemies[i])
 		end
 	end
 end
