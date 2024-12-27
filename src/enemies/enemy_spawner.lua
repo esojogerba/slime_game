@@ -4,6 +4,7 @@ require("src/weapons/sword")
 enemies = {}
 
 function spawnEnemy(x, y, type)
+	-- Create enemy instance
 	local enemy = {}
 
 	-- Anim8 library
@@ -59,17 +60,15 @@ function spawnEnemy(x, y, type)
 		init = require("src/enemies/blue_slime")
 	end
 
+	-- Initiate enemy according to their type
 	enemy = init(enemy, x, y)
 
+	-- Insert enemy into enemies table
 	table.insert(enemies, enemy)
-
-	if enemy then
-		print("Enemy: ", type)
-	end
 end
 
 function enemies:update(dt)
-	-- Calls update functions on all enemies
+	-- Calls update functions on all enemies on the map
 	for i, e in ipairs(self) do
 		e:update(dt)
 	end
@@ -77,14 +76,13 @@ function enemies:update(dt)
 	-- Iterate through all enemies in reverse to remove the dead ones
 	for i = #enemies, 1, -1 do
 		if enemies[i].death_status then
-			print(enemies[i])
 			table.remove(enemies, i)
-			print(enemies[i])
 		end
 	end
 end
 
 function enemies:reset()
+	-- Destroy all dead enemy colliders
 	for i, e in ipairs(self) do
 		e.collider:destroy()
 	end
@@ -96,6 +94,7 @@ function enemies:reset()
 end
 
 function enemies:draw()
+	-- Call draw functions for all enemies on the map
 	for i, e in ipairs(self) do
 		e:draw()
 	end
