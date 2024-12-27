@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 7,
-  nextobjectid = 108,
+  nextobjectid = 112,
   properties = {},
   tilesets = {
     {
@@ -286,7 +286,7 @@ return {
         },
         {
           id = 92,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 80,
@@ -299,7 +299,7 @@ return {
         },
         {
           id = 93,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 144,
@@ -325,7 +325,7 @@ return {
         },
         {
           id = 95,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 176,
@@ -338,7 +338,7 @@ return {
         },
         {
           id = 96,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 240,
@@ -351,7 +351,7 @@ return {
         },
         {
           id = 97,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 256,
@@ -364,7 +364,7 @@ return {
         },
         {
           id = 98,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 272,
@@ -377,7 +377,7 @@ return {
         },
         {
           id = 99,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 96,
@@ -390,7 +390,7 @@ return {
         },
         {
           id = 100,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 112,
@@ -403,7 +403,7 @@ return {
         },
         {
           id = 101,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 128,
@@ -416,7 +416,7 @@ return {
         },
         {
           id = 102,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 192,
@@ -429,7 +429,7 @@ return {
         },
         {
           id = 103,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 208,
@@ -442,7 +442,7 @@ return {
         },
         {
           id = 104,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 224,
@@ -455,7 +455,7 @@ return {
         },
         {
           id = 105,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 128,
@@ -468,7 +468,7 @@ return {
         },
         {
           id = 106,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 160,
@@ -481,11 +481,50 @@ return {
         },
         {
           id = 107,
-          name = "",
+          name = "brownSlime",
           type = "",
           shape = "point",
           x = 192,
           y = 288,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 108,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 64,
+          y = 128,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 109,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 160,
+          y = 128,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 110,
+          name = "brownSlime",
+          type = "",
+          shape = "point",
+          x = 48,
+          y = 160,
           width = 0,
           height = 0,
           rotation = 0,
