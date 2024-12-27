@@ -107,10 +107,21 @@ function Player:update(dt, enemies)
 	end
 
 	-- Enemy collisions
-	-- TODO check collision with all enemies, detect which enemy we collided with potentially
 	if self.collider:enter("Enemy") then
-		for i, e in ipairs(enemies) do
-			Player:enemyCollision(1, e, self.invincible)
+		if not self.invincible then
+			-- Get collision data
+			local collisionData = self.collider:getEnterCollisionData("Enemy")
+			-- Get the enemy's collider
+			local enemyCollider = collisionData.collider
+
+			-- Identify which enemy caused the collision and apply damage
+			for i, e in ipairs(enemies) do
+				if e.collider == enemyCollider then
+					-- Damage changes depending on enemy type
+					Player:enemyCollision(e.damage, e)
+					break
+				end
+			end
 		end
 	end
 end
@@ -161,39 +172,37 @@ function Player:move(dt)
 end
 
 -- Take damage from enemies when collision occurs
-function Player:enemyCollision(damage, Enemy, status)
-	if not status then
-		-- Decrease player's health
-		self.health = Player.health - damage
-		print("Player collided with Enemy!")
-		print("Player's Health: ", self.health)
+function Player:enemyCollision(damage, Enemy)
+	-- Decrease player's health
+	self.health = Player.health - damage
+	print("Player collided with Enemy!")
+	print("Player's Health: ", self.health)
 
-		-- Play sound effect
-		self.damage_sound:play()
+	-- Play sound effect
+	self.damage_sound:play()
 
-		-- Make player flash grey
-		self.isFlashing = true
-		self.flashTimer = 1
+	-- Make player flash grey
+	self.isFlashing = true
+	self.flashTimer = 2
 
-		-- Make player recoil
-		local enemy_x, enemy_y = Enemy.collider:getPosition()
-		local dx = self.x - enemy_x
-		local dy = self.y - enemy_y
-		local magnitude = math.sqrt(dx * dx + dy * dy)
+	-- Make player recoil
+	local enemy_x, enemy_y = Enemy.collider:getPosition()
+	local dx = self.x - enemy_x
+	local dy = self.y - enemy_y
+	local magnitude = math.sqrt(dx * dx + dy * dy)
 
-		-- If player is not dead, calculate recoil
-		if self.health > 0 then
-			self.recoilDirection.x = dx / magnitude
-			self.recoilDirection.y = dy / magnitude
-			self.recoilTimer = self.recoilDuration
-		end
+	-- If player is not dead, calculate recoil
+	if self.health > 0 then
+		self.recoilDirection.x = dx / magnitude
+		self.recoilDirection.y = dy / magnitude
+		self.recoilTimer = self.recoilDuration
+	end
 
-		-- Fade to game over screen if player has died
-		if self.health <= 0 and Game.state == "running" then
-			Game.state = "fading"
-			Game.fadeTimer = 1 -- Reset fade timer
-			Game.fadeAlpha = 1 -- Reset fade alpha
-		end
+	-- Fade to game over screen if player has died
+	if self.health <= 0 and Game.state == "running" then
+		Game.state = "fading"
+		Game.fadeTimer = 1 -- Reset fade timer
+		Game.fadeAlpha = 1 -- Reset fade alpha
 	end
 end
 
