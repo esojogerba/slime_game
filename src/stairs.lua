@@ -1,5 +1,6 @@
 require("src/player")
 require("src/map")
+require("src/enemies/enemy_spawner")
 
 Stairs = {}
 
@@ -32,13 +33,12 @@ end
 function Stairs:update(dt)
 	--if player touches stairs sprite changes if stairs open level changes
 	--(TODO change when all enemies dead)
-	if self.collider:enter("Player") then
-		if self.locked == false then
-			self:advanceToNextMap()
-		else
-			self.stairSprite = love.graphics.newImage("sprites/level/stairs.png")
-			self.locked = false
-		end
+	if enemies[1] == nil then
+		self.stairSprite = love.graphics.newImage("sprites/level/stairs.png")
+		self.locked = false
+	end
+	if self.collider:enter("Player") and self.locked == false then
+		self:advanceToNextMap()
 	end
 end
 
