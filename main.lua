@@ -5,6 +5,30 @@ require("src/sounds")
 require("src/stairs")
 require("src/weapons/sword")
 
+--list of maps
+local mapList = {
+	{ file = "maps/floor1_1.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 100, y = 270 }, floor = "1-1" },
+	{ file = "maps/floor1_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 50, y = 250 }, floor = "1-2" },
+	{ file = "maps/floor1_3.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 250 }, floor = "1-3" },
+	{ file = "maps/floor1_4.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-4" },
+	{ file = "maps/floor1_5.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 270 }, floor = "1-5" },
+	{ file = "maps/floor1_6.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 250 }, floor = "1-6" },
+	{ file = "maps/floor1_7.lua", playerStart = { x = 155, y = 20 }, stairsStart = { x = 150, y = 150 }, floor = "1-7" },
+	{ file = "maps/floor1_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-8" },
+	{ file = "maps/floor1_9.lua", playerStart = { x = 60, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-9" },
+	{ file = "maps/floor1_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 50 }, floor = "1-10" },
+	{ file = "maps/floor2_1.lua", playerStart = { x = 40, y = 50 }, stairsStart = { x = 270, y = 20 }, floor = "2-1" },
+	{ file = "maps/floor2_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 153, y = 150 }, floor = "2-2" },
+	{ file = "maps/floor2_3.lua", playerStart = { x = 155, y = 155 }, stairsStart = { x = 150, y = 280 }, floor = "2-3" },
+	{ file = "maps/floor2_4.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 273, y = 270 }, floor = "2-4" },
+	{ file = "maps/floor2_5.lua", playerStart = { x = 160, y = 40 }, stairsStart = { x = 153, y = 278 }, floor = "2-5" },
+	{ file = "maps/floor2_6.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 290 }, floor = "2-6" },
+	{ file = "maps/floor2_7.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 270, y = 280 }, floor = "2-7" },
+	{ file = "maps/floor2_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-8" },
+	{ file = "maps/floor2_9.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-9" },
+	{ file = "maps/floor2_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-10" }
+}
+
 function love.load()
 	-- Print to console
 	io.stdout:setvbuf("no")
@@ -26,30 +50,6 @@ function love.load()
 		{ collidesWith = { "Enemy" }, ignores = { "Player", "Obstacle", "Stairs" } }
 	)
 	world:addCollisionClass("None", { ignores = { "Enemy", "Player", "Obstacle", "Stairs" } })
-
-	--list of maps
-	local mapList = {
-		{ file = "maps/floor1_1.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 100, y = 270 } },
-		{ file = "maps/floor1_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 50, y = 250 } },
-		{ file = "maps/floor1_3.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 250 } },
-		{ file = "maps/floor1_4.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 150 } },
-		{ file = "maps/floor1_5.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 270 } },
-		{ file = "maps/floor1_6.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 250 } },
-		{ file = "maps/floor1_7.lua", playerStart = { x = 155, y = 20 }, stairsStart = { x = 150, y = 150 } },
-		{ file = "maps/floor1_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 150 } },
-		{ file = "maps/floor1_9.lua", playerStart = { x = 60, y = 50 }, stairsStart = { x = 150, y = 150 } },
-		{ file = "maps/floor1_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 50 } },
-		{ file = "maps/floor2_1.lua", playerStart = { x = 40, y = 50 }, stairsStart = { x = 270, y = 20 } },
-		{ file = "maps/floor2_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 153, y = 150 } },
-		{ file = "maps/floor2_3.lua", playerStart = { x = 155, y = 155 }, stairsStart = { x = 150, y = 280 } },
-		{ file = "maps/floor2_4.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 273, y = 270 } },
-		{ file = "maps/floor2_5.lua", playerStart = { x = 160, y = 40 }, stairsStart = { x = 153, y = 278 } },
-		{ file = "maps/floor2_6.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 290 } },
-		{ file = "maps/floor2_7.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 270, y = 280 } },
-		{ file = "maps/floor2_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 } },
-		{ file = "maps/floor2_9.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 } },
-		{ file = "maps/floor2_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 } },
-	}
 
 	-- Camera library
 	camera = require("libraries/camera")
@@ -161,6 +161,11 @@ function love.draw()
 
 		-- Detach camera
 		cam:detach()
+
+		-- Set HUD
+		love.graphics.setFont(love.graphics.newFont(12))
+		love.graphics.print("Health: "..Player.health, 25, 25)
+		love.graphics.print("Floor "..mapList[Stairs.currentMapIndex].floor, 25, 45)
 	end
 
 	if Game.state == "fading" then
