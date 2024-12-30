@@ -108,10 +108,34 @@ function love.load()
 
 	-- Game
 	Game = {
-		state = "running", -- Possible states: "running", "fading", "game_over"
+		state = "title", -- Possible states: "title", "running", "fading", "game_over"
 		fadeTimer = 1, -- Time in seconds for fading
 		fadeAlpha = 1, -- Initial alpha for fading
 		sound = love.audio.newSource("sounds/music/game_over.wav", "static"),
+	}
+
+	-- Font
+	Font = love.graphics.newImageFont(
+		"fonts/font.png",
+		" abcdefghijklmnopqrstuvwxyz" .. "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" .. "123456789.,!?-+/():;%&`'*#=[]\""
+	)
+
+	-- Title screen properties
+	TitleScreen = {
+		font = love.graphics.newFont(24),
+		titleFont = love.graphics.newFont(48),
+		titleText = "Slime Game",
+		controlsText = [[
+		Controls:
+		- Arrow Keys or WASD to Move
+		- Space to Attack
+		- Slay all enemies to unlock stairs
+	]],
+		startButton = {
+			text = "Start Game",
+			width = 200,
+			height = 50,
+		},
 	}
 
 	-- Stairs(list of maps)
@@ -129,6 +153,11 @@ function love.load()
 end
 
 function love.update(dt)
+	if Game.state == "title" then
+		-- No update logic for title screen for now
+		return
+	end
+
 	-- Game over
 	if Game.state == "fading" then
 		Game.fadeTimer = Game.fadeTimer - dt
@@ -172,6 +201,11 @@ function love.update(dt)
 end
 
 function love.draw()
+	if Game.state == "title" then
+		drawTitleScreen()
+		return
+	end
+
 	if Game.state == "running" or Game.state == "fading" then
 		-- Draw from the camera's perspective
 		cam:attach()
@@ -231,6 +265,21 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
+	if button == 1 and Game.state == "title" then
+		-- Check if "Start Game" button is clicked
+		local buttonX = (love.graphics.getWidth() - TitleScreen.startButton.width) / 2
+		local buttonY = love.graphics.getHeight() * 2 / 3
+
+		if
+			x > buttonX
+			and x < buttonX + TitleScreen.startButton.width
+			and y > buttonY
+			and y < buttonY + TitleScreen.startButton.height
+		then
+			Game.state = "running" -- Start the game
+		end
+	end
+
 	if button == 1 and Game.state == "game_over" then
 		-- Button dimensions
 		local buttonWidth, buttonHeight = 200, 50
@@ -242,6 +291,59 @@ function love.mousepressed(x, y, button)
 			resetGame()
 		end
 	end
+end
+
+function drawTitleScreen()
+	-- Background color
+	love.graphics.clear(0.1, 0.1, 0.2)
+
+	-- Screen dimensions
+	local screenWidth = love.graphics.getWidth()
+	local screenHeight = love.graphics.getHeight()
+
+	-- Title
+	love.graphics.setFont(TitleScreen.titleFont)
+	love.graphics.setColor(1, 1, 1)
+	local titleTextWidth = TitleScreen.titleFont:getWidth(TitleScreen.titleText)
+	local titleTextHeight = TitleScreen.titleFont:getHeight()
+	love.graphics.printf(
+		TitleScreen.titleText,
+		(screenWidth - titleTextWidth) / 2,
+		screenHeight / 6,
+		titleTextWidth,
+		"center"
+	)
+
+	-- Controls instructions
+	love.graphics.setFont(TitleScreen.font)
+	local controlsTextWidth = TitleScreen.font:getWidth(TitleScreen.controlsText)
+	local controlsX = (screenWidth - controlsTextWidth) / 2 -- Calculate horizontal center
+	local controlsY = screenHeight / 3 -- Keep vertical position fixed
+	love.graphics.printf(
+		TitleScreen.controlsText,
+		controlsX,
+		controlsY,
+		screenWidth,
+		"left" -- No alignment since we manually center horizontally
+	)
+
+	-- Start button
+	local buttonWidth = TitleScreen.startButton.width
+	local buttonHeight = TitleScreen.startButton.height
+	local buttonX = (screenWidth - buttonWidth) / 2
+	local buttonY = screenHeight * 2 / 3
+	love.graphics.rectangle("fill", buttonX, buttonY, buttonWidth, buttonHeight)
+
+	-- Button text
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.printf(
+		TitleScreen.startButton.text,
+		buttonX,
+		buttonY + (buttonHeight - TitleScreen.font:getHeight()) / 2,
+		buttonWidth,
+		"center"
+	)
+	love.graphics.setColor(1, 1, 1) -- Reset color
 end
 
 function resetGame()
