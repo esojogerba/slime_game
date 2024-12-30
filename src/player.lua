@@ -133,27 +133,27 @@ function Player:move(dt)
 	local vy = 0
 
 	-- Player moves right
-	if love.keyboard.isDown("right") then
+	if love.keyboard.isDown("right") or love.keyboard.isDown("d") then
 		vx = self.speed
 		self.animations.down = self.animations.right
 		self.anim = self.animations.right
 		self.curr_direction = "right"
 	end
 	-- Player moves left
-	if love.keyboard.isDown("left") then
+	if love.keyboard.isDown("left") or love.keyboard.isDown("a") then
 		vx = self.speed * -1
 		self.animations.down = self.animations.left
 		self.anim = self.animations.left
 		self.curr_direction = "left"
 	end
 	-- Player moves up
-	if love.keyboard.isDown("up") then
+	if love.keyboard.isDown("up") or love.keyboard.isDown("w") then
 		vy = self.speed * -1
 		self.anim = self.animations.up
 		self.curr_direction = "up"
 	end
 	-- Player moves down
-	if love.keyboard.isDown("down") then
+	if love.keyboard.isDown("down") or love.keyboard.isDown("s") then
 		vy = self.speed
 		self.anim = self.animations.down
 		self.curr_direction = "down"
