@@ -78,7 +78,6 @@ local function brownInit(enemy, x, y)
 		if not death_status then
 			-- Decrease enemy's health
 			enemy.health = enemy.health - damage
-			print("Enemy damaged, health: ", enemy.health)
 
 			-- Play damage sound
 			enemy.damage_sound:play()
