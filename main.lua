@@ -295,7 +295,7 @@ end
 
 function drawTitleScreen()
 	-- Background color
-	love.graphics.clear(0.1, 0.1, 0.2)
+	love.graphics.clear(0, 0.8, 0)
 
 	-- Screen dimensions
 	local screenWidth = love.graphics.getWidth()
