@@ -9,24 +9,59 @@ require("src/weapons/sword")
 local mapList = {
 	{ file = "maps/floor1_1.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 100, y = 270 }, floor = "1-1" },
 	{ file = "maps/floor1_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 50, y = 250 }, floor = "1-2" },
-	{ file = "maps/floor1_3.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 250 }, floor = "1-3" },
-	{ file = "maps/floor1_4.lua", playerStart = { x = 155, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-4" },
+	{
+		file = "maps/floor1_3.lua",
+		playerStart = { x = 155, y = 50 },
+		stairsStart = { x = 150, y = 250 },
+		floor = "1-3",
+	},
+	{
+		file = "maps/floor1_4.lua",
+		playerStart = { x = 155, y = 50 },
+		stairsStart = { x = 150, y = 150 },
+		floor = "1-4",
+	},
 	{ file = "maps/floor1_5.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 270 }, floor = "1-5" },
 	{ file = "maps/floor1_6.lua", playerStart = { x = 45, y = 50 }, stairsStart = { x = 50, y = 250 }, floor = "1-6" },
-	{ file = "maps/floor1_7.lua", playerStart = { x = 155, y = 20 }, stairsStart = { x = 150, y = 150 }, floor = "1-7" },
+	{
+		file = "maps/floor1_7.lua",
+		playerStart = { x = 155, y = 20 },
+		stairsStart = { x = 150, y = 150 },
+		floor = "1-7",
+	},
 	{ file = "maps/floor1_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-8" },
 	{ file = "maps/floor1_9.lua", playerStart = { x = 60, y = 50 }, stairsStart = { x = 150, y = 150 }, floor = "1-9" },
-	{ file = "maps/floor1_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 50 }, floor = "1-10" },
+	{
+		file = "maps/floor1_10.lua",
+		playerStart = { x = 50, y = 50 },
+		stairsStart = { x = 150, y = 50 },
+		floor = "1-10",
+	},
 	{ file = "maps/floor2_1.lua", playerStart = { x = 40, y = 50 }, stairsStart = { x = 270, y = 20 }, floor = "2-1" },
 	{ file = "maps/floor2_2.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 153, y = 150 }, floor = "2-2" },
-	{ file = "maps/floor2_3.lua", playerStart = { x = 155, y = 155 }, stairsStart = { x = 150, y = 280 }, floor = "2-3" },
+	{
+		file = "maps/floor2_3.lua",
+		playerStart = { x = 155, y = 155 },
+		stairsStart = { x = 150, y = 280 },
+		floor = "2-3",
+	},
 	{ file = "maps/floor2_4.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 273, y = 270 }, floor = "2-4" },
-	{ file = "maps/floor2_5.lua", playerStart = { x = 160, y = 40 }, stairsStart = { x = 153, y = 278 }, floor = "2-5" },
+	{
+		file = "maps/floor2_5.lua",
+		playerStart = { x = 160, y = 40 },
+		stairsStart = { x = 153, y = 278 },
+		floor = "2-5",
+	},
 	{ file = "maps/floor2_6.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 150, y = 290 }, floor = "2-6" },
 	{ file = "maps/floor2_7.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 270, y = 280 }, floor = "2-7" },
 	{ file = "maps/floor2_8.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-8" },
 	{ file = "maps/floor2_9.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-9" },
-	{ file = "maps/floor2_10.lua", playerStart = { x = 50, y = 50 }, stairsStart = { x = 280, y = 280 }, floor = "2-10" }
+	{
+		file = "maps/floor2_10.lua",
+		playerStart = { x = 50, y = 50 },
+		stairsStart = { x = 280, y = 280 },
+		floor = "2-10",
+	},
 }
 
 function love.load()
@@ -73,10 +108,34 @@ function love.load()
 
 	-- Game
 	Game = {
-		state = "running", -- Possible states: "running", "fading", "game_over"
+		state = "title", -- Possible states: "title", "running", "fading", "game_over"
 		fadeTimer = 1, -- Time in seconds for fading
 		fadeAlpha = 1, -- Initial alpha for fading
 		sound = love.audio.newSource("sounds/music/game_over.wav", "static"),
+	}
+
+	-- Font
+	Font = love.graphics.newImageFont(
+		"fonts/font.png",
+		" abcdefghijklmnopqrstuvwxyz" .. "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" .. "123456789.,!?-+/():;%&`'*#=[]\""
+	)
+
+	-- Title screen properties
+	TitleScreen = {
+		font = love.graphics.newFont(24),
+		titleFont = love.graphics.newFont(48),
+		titleText = "Slime Game",
+		controlsText = [[
+		Controls:
+		- Arrow Keys or WASD to Move
+		- Space to Attack
+		- Slay all enemies to unlock stairs
+	]],
+		startButton = {
+			text = "Start Game",
+			width = 200,
+			height = 50,
+		},
 	}
 
 	-- Stairs(list of maps)
@@ -94,6 +153,11 @@ function love.load()
 end
 
 function love.update(dt)
+	if Game.state == "title" then
+		-- No update logic for title screen for now
+		return
+	end
+
 	-- Game over
 	if Game.state == "fading" then
 		Game.fadeTimer = Game.fadeTimer - dt
@@ -137,6 +201,11 @@ function love.update(dt)
 end
 
 function love.draw()
+	if Game.state == "title" then
+		drawTitleScreen()
+		return
+	end
+
 	if Game.state == "running" or Game.state == "fading" then
 		-- Draw from the camera's perspective
 		cam:attach()
@@ -164,8 +233,8 @@ function love.draw()
 
 		-- Set HUD
 		love.graphics.setFont(love.graphics.newFont(12))
-		love.graphics.print("Health: "..Player.health, 25, 25)
-		love.graphics.print("Floor "..mapList[Stairs.currentMapIndex].floor, 25, 45)
+		love.graphics.print("Health: " .. Player.health, 25, 25)
+		love.graphics.print("Floor " .. mapList[Stairs.currentMapIndex].floor, 25, 45)
 	end
 
 	if Game.state == "fading" then
@@ -196,6 +265,21 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button)
+	if button == 1 and Game.state == "title" then
+		-- Check if "Start Game" button is clicked
+		local buttonX = (love.graphics.getWidth() - TitleScreen.startButton.width) / 2
+		local buttonY = love.graphics.getHeight() * 2 / 3
+
+		if
+			x > buttonX
+			and x < buttonX + TitleScreen.startButton.width
+			and y > buttonY
+			and y < buttonY + TitleScreen.startButton.height
+		then
+			Game.state = "running" -- Start the game
+		end
+	end
+
 	if button == 1 and Game.state == "game_over" then
 		-- Button dimensions
 		local buttonWidth, buttonHeight = 200, 50
@@ -207,6 +291,59 @@ function love.mousepressed(x, y, button)
 			resetGame()
 		end
 	end
+end
+
+function drawTitleScreen()
+	-- Background color
+	love.graphics.clear(0, 0.8, 0)
+
+	-- Screen dimensions
+	local screenWidth = love.graphics.getWidth()
+	local screenHeight = love.graphics.getHeight()
+
+	-- Title
+	love.graphics.setFont(TitleScreen.titleFont)
+	love.graphics.setColor(1, 1, 1)
+	local titleTextWidth = TitleScreen.titleFont:getWidth(TitleScreen.titleText)
+	local titleTextHeight = TitleScreen.titleFont:getHeight()
+	love.graphics.printf(
+		TitleScreen.titleText,
+		(screenWidth - titleTextWidth) / 2,
+		screenHeight / 6,
+		titleTextWidth,
+		"center"
+	)
+
+	-- Controls instructions
+	love.graphics.setFont(TitleScreen.font)
+	local controlsTextWidth = TitleScreen.font:getWidth(TitleScreen.controlsText)
+	local controlsX = (screenWidth - controlsTextWidth) / 2 -- Calculate horizontal center
+	local controlsY = screenHeight / 3 -- Keep vertical position fixed
+	love.graphics.printf(
+		TitleScreen.controlsText,
+		controlsX,
+		controlsY,
+		screenWidth,
+		"left" -- No alignment since we manually center horizontally
+	)
+
+	-- Start button
+	local buttonWidth = TitleScreen.startButton.width
+	local buttonHeight = TitleScreen.startButton.height
+	local buttonX = (screenWidth - buttonWidth) / 2
+	local buttonY = screenHeight * 2 / 3
+	love.graphics.rectangle("fill", buttonX, buttonY, buttonWidth, buttonHeight)
+
+	-- Button text
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.printf(
+		TitleScreen.startButton.text,
+		buttonX,
+		buttonY + (buttonHeight - TitleScreen.font:getHeight()) / 2,
+		buttonWidth,
+		"center"
+	)
+	love.graphics.setColor(1, 1, 1) -- Reset color
 end
 
 function resetGame()
@@ -224,6 +361,9 @@ function resetGame()
 	Player.recoilTimer = 0
 	Player.collider:setPosition(firstMap.playerStart.x, firstMap.playerStart.y)
 	Player.anim = Player.animations.right
+
+	-- Reset sword
+	Sword.isActive = false
 
 	-- Reset stairs
 	Stairs.x = firstMap.stairsStart.x
