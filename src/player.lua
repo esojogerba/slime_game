@@ -175,8 +175,6 @@ end
 function Player:enemyCollision(damage, Enemy)
 	-- Decrease player's health
 	self.health = Player.health - damage
-	print("Player collided with Enemy!")
-	print("Player's Health: ", self.health)
 
 	-- Play sound effect
 	self.damage_sound:play()
